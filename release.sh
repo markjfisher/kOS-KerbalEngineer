@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd GameData
-zip -r ../kOS-KER.zip kOS-KER
+zip -r ../kOS-KerbalEngineer.zip kOS-KerbalEngineer
