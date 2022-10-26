@@ -1,0 +1,122 @@
+<Project>
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <AssemblyName>kOS-KerbalEngineer</AssemblyName>
+    <RootNamespace>kOS.AddOns.kOSKerbalEngineer</RootNamespace>
+    <GameDataPath>..\GameData\</GameDataPath>
+    <ChangelogFile>$(GameDataPath)$(AssemblyName)\$(AssemblyName)-Changelog.cfg</ChangelogFile>
+    <ZipFile>..\$(AssemblyName).zip</ZipFile>
+    <OutDir>$(GameDataPath)$(AssemblyName)\Plugins\</OutDir>
+    <BaseIntermediateOutputPath>..\obj\</BaseIntermediateOutputPath>
+    <IntermediateOutputPath>..\obj\</IntermediateOutputPath>
+    <ProjectGuid>{5A53F49A-6547-4D61-B4D2-18BF851D8063}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <Prefer32Bit>false</Prefer32Bit>
+    <LangVersion>7.3</LangVersion>
+    <DocumentationFile>$(IntermediateOutputPath)$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Private=false prevents the reference from being copied to the output directory -->
+    <Reference Include="KerbalEngineer">
+      <HintPath>KSP_GameData\KerbalEngineer\KerbalEngineer.dll</HintPath>
+      <Private>false</Private>
+	</Reference>
+    <Reference Include="KerbalEngineer.Unity">
+      <HintPath>KSP_GameData\KerbalEngineer\KerbalEngineer.Unity.dll</HintPath>
+      <Private>false</Private>
+	</Reference>
+    <Reference Include="System">
+      <HintPath>KSP_Data\Managed\System.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <HintPath>KSP_Data\Managed\System.Core.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>KSP_Data\Managed\System.Xml.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="KSPAssets">
+      <HintPath>KSP_Data\Managed\KSPAssets.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>KSP_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>KSP_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>KSP_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>KSP_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AnimationModule">
+      <HintPath>KSP_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>KSP_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="kOS">
+      <HintPath>KSP_GameData\kOS\Plugins\kOS.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="kOS.Safe">
+      <HintPath>KSP_GameData\kOS\Plugins\kOS.Safe.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <Target Name="DeleteXMLDocs" AfterTargets="Build">
+    <Delete Files="$(OutDir)$(AssemblyName).xml" />
+  </Target>
+  <Target Name="MakeZip">
+    <PropertyGroup>
+      <Changelog>$([System.IO.File]::ReadAllText($(ChangelogFile)))</Changelog>
+    </PropertyGroup>
+    <WriteLinesToFile Condition="!$(Changelog.Contains('showChangelog = True'))" File="$(ChangelogFile)" Lines="$(Changelog.Replace('showChangelog = False', 'showChangelog = True'))" Overwrite="true" />
+    <ZipDirectory SourceDirectory="$(GameDataPath)" DestinationFile="$(ZipFile)" OverWrite="true" />
+  </Target>
+  <Target Name="CleanMore" AfterTargets="Clean">
+    <RemoveDir Directories="$(BaseIntermediateOutputPath)" />
+    <Delete Files="$(ZipFile)" />
+  </Target>
+</Project>

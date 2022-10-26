@@ -1,0 +1,23 @@
+{
+	"NAME": "kOS-KerbalEngineer",
+	"URL": "https://raw.githubusercontent.com/markjfisher/kOS-KerbalEngineer/master/GameData/kOS-KerbalEngineer/kOS-KerbalEngineer.version",
+	"DOWNLOAD" : "https://github.com/markjfisher/kOS-KerbalEngineer/releases",
+	"GITHUB": {
+		"USERNAME": "markjfisher",
+		"REPOSITORY": "kOS-KerbalEngineer",
+		"ALLOW_PRE_RELEASE": false
+	},
+	"VERSION": {
+		"MAJOR": 0,
+		"MINOR": 1,
+		"PATCH": 0
+	},
+	"KSP_VERSION_MIN": {
+		"MAJOR": 1,
+		"MINOR": 12
+	},
+	"KSP_VERSION_MAX": {
+		"MAJOR": 1,
+		"MINOR": 12
+	}
+}

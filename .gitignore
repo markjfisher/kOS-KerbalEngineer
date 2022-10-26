@@ -1,0 +1,19 @@
+# Build results
+obj/
+
+# Binary files
+*.dll
+*.pdb
+
+# Compiled mod file
+*.zip
+
+# Our special symlink to the game DLLs
+Source/KSP_Data
+Source/KSP_GameData
+
+# Encrypted game DLL archive
+*.tar.gz.gpg
+
+# Visual Studio 2022 project files
+.vs/
